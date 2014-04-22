@@ -5,6 +5,7 @@
 
 var app = require('./app.jsx');
 
+// add the component to the DOM
 React.renderComponent(
   /* jshint ignore:start */
   <app />,

@@ -7,28 +7,43 @@
 module.exports = React.createClass({displayName: 'exports',
   getInitialState: function () {
     return {
-      message : 'Always a pleasure scaffolding your apps.'
+      // initial static list of phones
+      phones : [
+        {'name': 'Nexus S',
+         'snippet': 'Fast just got faster with Nexus S.'},
+        {'name': 'Motorola XOOM™ with Wi-Fi',
+         'snippet': 'The Next, Next Generation tablet.'},
+        {'name': 'MOTOROLA XOOM™',
+         'snippet': 'The Next, Next Generation tablet.'}
+      ]
     };
   },
-  reverse: function (event) {
-	this.setState({
-      message : this.state.message.split('').reverse().join('')
-    });
-  },
+    //
+  // ### render
+  // (* required)
+  //
+  // When called, it should examine this.props and this.state and return a single child component. 
+  // This child component can be either a virtual representation of a native DOM component 
+  // or another composite component that you've defined yourself.
+  //
   render: function () {
+    // tranform the list of phones to markup 
+    var phones = this.state.phones.map(function (element, index) {
+      return (
+      /* jshint ignore:start */
+        React.DOM.div( {id:"phone"+index}, 
+          React.DOM.h4(null, element.name),
+          React.DOM.p(null, element.snippet)
+        )
+        /* jshint ignore:end */
+      );
+    });
 	return (
       /* jshint ignore:start */
-      React.DOM.div(null, 
-        React.DOM.p( {ref:"p", className:"lead"}, this.state.message),
-        React.DOM.p(null, 
-          React.DOM.button(
-            {type:"button",
-            className:"btn btn-success",
-            ref:"button",
-            onClick:this.reverse}, 
-            React.DOM.span( {className:"glyphicon glyphicon-refresh"}),
-              "Click me!"
-          )
+      React.DOM.section( {className:"container-fluid"}, 
+        React.DOM.article( {className:"col-md-3"}),
+        React.DOM.article( {className:"col-md-9", ref:"phoneList"}, 
+          phones
         )
       )
       /* jshint ignore:end */
@@ -45,6 +60,7 @@ module.exports = React.createClass({displayName: 'exports',
 
 var app = require('./app.jsx');
 
+// add the component to the DOM
 React.renderComponent(
   /* jshint ignore:start */
   app(null ),
